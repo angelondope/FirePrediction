@@ -17,9 +17,9 @@ create table la as select los_angeles_weather.year, los_angeles_weather.doy, los
 
 create table sd as select san_diego_weather.year, san_diego_weather.doy, san_diego_weather.hourmin, san_diego_weather.temperature, san_diego_weather.humidity, san_diego_weather.pressure, san_diego_weather.wind, groupby_sd.count as firecount from san_diego_weather left join groupby_sd on (san_diego_weather.year = groupby_sd.year) and (san_diego_weather.doy = groupby_sd.doy) and (san_diego_weather.hourmin = groupby_sd.hourmin);
 
-delete from sf where temperature = '' and humidity = '' and pressure = '' and wind = '';
-delete from la where temperature = '' and humidity = '' and pressure = '' and wind = '';
-delete from sd where temperature = '' and humidity = '' and pressure = '' and wind = '';
+delete from sf where temperature = '' or humidity = '' or pressure = '' or wind = '';
+delete from la where temperature = '' or humidity = '' or pressure = '' or wind = '';
+delete from sd where temperature = '' or humidity = '' or pressure = '' or wind = '';
 
 .headers on
 .mode csv
