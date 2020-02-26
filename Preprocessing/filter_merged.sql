@@ -17,3 +17,18 @@ UPDATE sd_supervised SET firecount = CASE WHEN firecount > 0 THEN 'T' ELSE 'F' E
 
 create table la_supervised as select * from la;
 UPDATE la_supervised SET firecount = CASE WHEN firecount > 0 THEN 'T' ELSE 'F' END;
+
+.headers on
+.mode csv
+.output san_francisco_supervised.csv
+select * from sf_supervised;
+
+.headers on
+.mode csv
+.output los_angeles_supervised.csv
+select * from la_supervised;
+
+.headers on
+.mode csv
+.output san_diego_supervised.csv
+select * from sd_supervised;
