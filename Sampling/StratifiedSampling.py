@@ -30,4 +30,9 @@ df2 = raw[raw.firecount == 'F']
 df1 = df1.sample(n = min(int(count * frac), len(df1)), random_state = 1, axis = 0)
 df2 = df2.sample(n = min(int((1-frac) * count), len(df2)), random_state = 1, axis = 0)
 df1 = df1.append(df2, ignore_index = True)
+df1 = df1[['year','doy','hourmin','temperature','humidity','pressure','wind','firecount']]
+df1.temperature = np.around(df1.temperature, decimals = 2)
+df1.humidity = np.around(df1.humidity, decimals = 2)
+df1.pressure = np.around(df1.pressure, decimals = 2)
+df1.wind = np.around(df1.wind, decimals = 2)
 df1.to_csv(write_file)

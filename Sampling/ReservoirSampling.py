@@ -30,7 +30,7 @@ for line in readFile :
 	if i < count :
 		reservoir.append(line)
 	else :
-		rand = np.random.randint(0,i + 1)
+		rand = np.random.randint(1,i + 1)
 		if rand < count :
 			reservoir[rand] = line
 	i += 1
@@ -40,3 +40,11 @@ writeFile = open(write_file,'w')
 for i in reservoir :
 	writeFile.write(i)
 writeFile.close()
+
+raw = pd.read_csv(write_file)
+raw = raw[['year','doy','hourmin','temperature','humidity','pressure','wind','firecount']]
+raw.temperature = np.around(raw.temperature, decimals = 2)
+raw.humidity = np.around(raw.humidity, decimals = 2)
+raw.pressure = np.around(raw.pressure, decimals = 2)
+raw.wind = np.around(raw.wind, decimals = 2)
+raw.to_csv(write_file)
