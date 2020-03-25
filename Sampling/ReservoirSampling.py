@@ -43,8 +43,4 @@ writeFile.close()
 
 raw = pd.read_csv(write_file)
 raw = raw[['year','doy','hourmin','temperature','humidity','pressure','wind','firecount']]
-raw.temperature = np.around(raw.temperature, decimals = 2)
-raw.humidity = np.around(raw.humidity, decimals = 2)
-raw.pressure = np.around(raw.pressure, decimals = 2)
-raw.wind = np.around(raw.wind, decimals = 2)
 raw.to_csv(write_file)

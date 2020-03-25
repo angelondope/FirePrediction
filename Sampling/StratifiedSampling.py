@@ -2,12 +2,11 @@ import sys
 import pandas as pd
 import numpy as np
 
-read_file, write_file, count, num, denom = '', '', sys.argv[2], sys.argv[3], sys.argv[4]
-frac = float(num)/float(denom)
+read_file, write_file, count = '', '', sys.argv[2]
 count = float(count)
 input_path = '/Users/abs/Work/ForestFiresSpatial/Preprocessing/'
 
-if len(sys.argv) < 3 or (sys.argv[1] != 'sf' and sys.argv[1] != 'sd' and sys.argv[1] != 'la'):
+if len(sys.argv) < 2 or (sys.argv[1] != 'sf' and sys.argv[1] != 'sd' and sys.argv[1] != 'la'):
     print ('Incorrect arguments')
     sys.exit()
 else:
@@ -27,12 +26,10 @@ else:
 raw = pd.read_csv(read_file)
 df1 = raw[raw.firecount == 'T']
 df2 = raw[raw.firecount == 'F']
+frac = float(len(df1))/float(len(df2) + len(df1))
 df1 = df1.sample(n = min(int(count * frac), len(df1)), random_state = 1, axis = 0)
 df2 = df2.sample(n = min(int((1-frac) * count), len(df2)), random_state = 1, axis = 0)
 df1 = df1.append(df2, ignore_index = True)
 df1 = df1[['year','doy','hourmin','temperature','humidity','pressure','wind','firecount']]
-df1.temperature = np.around(df1.temperature, decimals = 2)
-df1.humidity = np.around(df1.humidity, decimals = 2)
-df1.pressure = np.around(df1.pressure, decimals = 2)
-df1.wind = np.around(df1.wind, decimals = 2)
+df1 = df1.sample(frac = 1)
 df1.to_csv(write_file)
